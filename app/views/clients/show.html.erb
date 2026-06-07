@@ -1,0 +1,33 @@
+<h1><%= @client.name %>さんの情報</h1>
+
+<div class="card">
+
+
+<%= link_to "情報の編集", edit_client_path(@client), class: "btn" %>         
+<%= link_to "預金情報", client_deposits_path(@client), class: "btn" %>          
+<%= link_to "財産目録を出力する", "/exports/zaisan/#{@client.id}", class: "btn" %>
+
+
+<div class="row">
+  <span class="label">名前</span>
+  <span class="value"><%= @client.name %></span>
+</div>
+
+<div class="row">
+  <span class="label">生年月日</span>
+  <span class="value"><%= @client.birthdate.strftime("%Y年%m月%d日") if @client.birthdate %></span>
+</div>
+
+<div class="row">
+  <span class="label">住所</span>
+  <span class="value"><%= @client.address %></span>
+</div>
+
+<div class="row">
+  <span class="label">事件番号</span>
+  <span class="value"><%= @client.case_number %></span>
+</div>
+
+</div>
+
+<%= link_to "一覧に戻る", clients_path, class: "btn btn-glay"%>

@@ -1,0 +1,4 @@
+ja:
+  date:
+    formats:
+      wareki: "%-JY年%-m月%-d日"

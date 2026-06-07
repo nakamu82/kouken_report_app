@@ -1,0 +1,37 @@
+<%= form_with(model: client, local: true) do |form| %>
+  <div>
+    <%= form.label :name, "名前" %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="date_select">
+    <div>
+      <%= form.label :birthdate, "生年月日" %><br>
+      <%= form.date_select :birthdate, start_year: 1900, end_year: Date.today.year, order: [:year, :month, :day], default: Date.new(1950, 1, 1), use_month_numbers: true %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :address, "住所" %><br>
+    <%= form.text_field :address %>
+  </div>
+
+  <div class="form-group">
+  <%= form.label :case_number, "事件番号" %>
+    <div class="case_number_group">
+      <select name="client[era]">
+        <option value="令和">令和</option>
+        <option value="平成">平成</option>
+      </select>
+      <input type="number" name="client[year]" min="1" placeholder="年">
+      <span>年（家）第</span>
+      <input type="number" name="client[number]" min="1" placeholder="番号">
+      <span>号</span>
+    </div>
+  </div>
+
+  <div>
+    <%= form.submit "確認" %>
+    <%= link_to "一覧に戻る", clients_path(@client), class: "btn btn-glay"%>
+  </div>
+<% end %>

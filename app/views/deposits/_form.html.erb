@@ -1,0 +1,82 @@
+<%= form_with(model: [@client, @deposit], data: {turbo: false, controller: "deposit-form" }) do |form|  %>
+
+  <div>
+    <%= form.label :deposit_type, "預貯金の種類を選択してください" %><br>
+    <%= form.select :deposit_type,
+      [
+        ["金融機関", "金融機関"],
+        ["現金", "現金"],
+        ["施設等預入金", "施設等預入金"],
+        ["支援信託", "支援信託"],
+        ["支援預貯金", "支援預貯金"]
+      ],
+      { prompt: "選択してください" } ,
+      { data: {action: "change->deposit-form#switchFields" }}
+    %>
+  </div>
+
+  <!-- 銀行系の入力欄 -->
+  <div class="bank-fields" data-deposit-form-target = "bankFields">
+
+    <div>
+      <%= form.label :bank_name, "金融機関の名称" %><br>
+      <%= form.text_field :bank_name %>
+    </div>
+
+    <div>
+      <%= form.label :branch_name, "支店名" %><br>
+      <%= form.text_field :branch_name %>
+    </div>
+
+    <div>
+      <%= form.label :account_type, "口座種別" %><br>
+      <%= form.select :account_type,
+        [
+          ["普通", "普通"],
+          ["定期", "定期"],
+          ["その他", "その他"]
+        ],
+        prompt: "選択してください"
+      %>
+    </div>
+
+    <div>
+      <%= form.label :account_number, "口座番号" %><br>
+      <%= form.text_field :account_number %>
+    </div>
+
+    <div>
+      <%= form.label :last_checked_on, "最終確認日" %><br>
+      <%= form.date_field :last_checked_on,
+        start_year: 2000,
+        end_year: Date.today.year,
+        order: [:year, :month, :day],
+        default: Date.today
+      %>
+    </div>
+
+  </div>
+
+  <!-- 施設等預入金の入力欄 -->
+  <div class="facility-fields" data-deposit-form-target="facilityFields">
+    <div>
+      <%= form.label :facility_name, "施設等預入金の預入先" %><br>
+      <%= form.text_field :facility_name %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.label :balance, "残高（円）" %><br>
+    <%= form.number_field :balance %>
+  </div>
+
+  <div>
+    <%= form.label :manager, "管理者" %><br>
+    <%= form.text_field :manager %>
+  </div>
+
+  <div>
+    <%= form.submit "確認" %>
+  </div>
+
+<% end %>

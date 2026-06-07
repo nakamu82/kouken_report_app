@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# Railsサーバーとimportmapのwatcherを同時に起動するスクリプト
+bin/rails server &
+bin/importmap watch
+

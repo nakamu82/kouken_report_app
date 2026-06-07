@@ -1,0 +1,45 @@
+<h1><%= @client.name %>さんの預貯金・現金情報</h1>
+
+<div class="card table-card">
+
+<%= link_to "＋預金情報を追加する", new_client_deposit_path, class: "btn" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>預貯金の種類</th>
+      <th>金融機関の名称</th>
+      <th>支店名</th>
+      <th>口座種別</th>
+      <th>口座番号</th>
+      <th>最終確認日</th>
+      <th>残高（円）</th>
+      <th>管理者</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @deposits.each do |deposit| %>
+    <tr>
+      <td><%= deposit.deposit_type %></td>
+      <td><%= deposit.bank_name %></td>
+      <td><%= deposit.branch_name %></td>
+      <td><%= deposit.account_type %></td>
+      <td><%= deposit.account_number %></td>
+      <td><%= deposit.last_checked_on %></td>
+      <td><%= deposit.balance %></td>
+      <td><%= deposit.manager %></td>
+      <td>
+      <%= link_to "編集", edit_client_deposit_path(deposit.client, deposit), class: "btn btn-blue" %>
+      <%= link_to "削除", client_deposit_path(deposit.client, deposit), class: "btn btn-mini", method: :delete, data: { turbo: false, confirm: "本当に削除しますか？" } %>          
+      </td>
+    </tr>
+  <% end %>
+  </tbody> 
+</table>
+
+
+<%= link_to "戻る", request.referer || clietns_path, class: "btn btn-glay"%>
+<%= link_to "被後見人一覧へ", clients_path(@client), class: "btn btn-glay"%>
+
+</div>

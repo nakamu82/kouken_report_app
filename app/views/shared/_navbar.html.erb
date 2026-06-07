@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container">
+
+    <a class="navbar-brand" href="/">成年後見支援サイト</a>
+
+    <div class="nav-left">
+      <% if user_signed_in? %>
+        <span><%= "#{current_user.name.presence || current_user.email}さん、こんにちは" %></span>
+      <% end %>
+    </div>
+
+    <% if user_signed_in? %>
+      <div class="d-flex ms-auto align-items-center">
+
+        <div class="dropdown">
+          <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            メニュー
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><%= link_to 'ホーム', root_path, class: "dropdown-item" %></li>
+            <li><%= link_to '被後見人一覧', clients_path, class: "dropdown-item" %></li>
+            <li><%= link_to 'ログインユーザー情報', user_path(current_user), class: "dropdown-item" %></li>
+            <li><%= link_to 'レポート一覧', root_path, class: "dropdown-item" %></li>
+          </ul>
+        </div>
+  </div>
+       
+    <div class="nav-left">
+        <%= button_to "ログアウト",
+              destroy_user_session_path,
+              method: :delete,
+              data: { turbo: false },
+              class: "btn btn-glay" %>
+
+      </div>
+    <% else %>
+      <%= link_to 'ログイン', new_user_session_path, class: "btn btn-primary ms-auto" %>
+    <% end %>
+
+  </div>
+</nav>
