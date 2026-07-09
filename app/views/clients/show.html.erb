@@ -2,32 +2,375 @@
 
 <div class="card">
 
+  <%= link_to "被後見人情報の編集", edit_client_path(@client), class: "btn" %>
 
-<%= link_to "情報の編集", edit_client_path(@client), class: "btn" %>         
-<%= link_to "預金情報", client_deposits_path(@client), class: "btn" %>          
-<%= link_to "財産目録を出力する", "/exports/zaisan/#{@client.id}", class: "btn" %>
+  <div class="row">
+    <span class="label">名前</span>
+    <span class="value"><%= @client.name %></span>
+  </div>
 
+  <div class="row">
+    <span class="label">生年月日</span>
+    <span class="value"><%= @client.birthdate.strftime("%Y年%m月%d日") if @client.birthdate %></span>
+  </div>
 
-<div class="row">
-  <span class="label">名前</span>
-  <span class="value"><%= @client.name %></span>
-</div>
+  <div class="row">
+    <span class="label">住所</span>
+    <span class="value"><%= @client.address %></span>
+  </div>
 
-<div class="row">
-  <span class="label">生年月日</span>
-  <span class="value"><%= @client.birthdate.strftime("%Y年%m月%d日") if @client.birthdate %></span>
-</div>
-
-<div class="row">
-  <span class="label">住所</span>
-  <span class="value"><%= @client.address %></span>
-</div>
-
-<div class="row">
-  <span class="label">事件番号</span>
-  <span class="value"><%= @client.case_number %></span>
-</div>
+  <div class="row">
+    <span class="label">事件番号</span>
+    <span class="value"><%= @client.case_number %></span>
+  </div>
 
 </div>
 
-<%= link_to "一覧に戻る", clients_path, class: "btn btn-glay"%>
+<hr>
+
+<h2>預貯金・現金</h2>
+<%= link_to "追加", new_client_deposit_path(@client), class: "btn" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>預貯金の種類</th>
+      <th>金融機関の名称</th>
+      <th>支店名</th>
+      <th>口座種別</th>
+      <th>口座番号</th>
+      <th>残高（円）</th>
+      <th>管理者</th>
+      <th>資料の有無</th>
+      <th>最終確認日</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @client.deposits.each do |deposit| %>
+    <tr>
+      <td><%= deposit.deposit_type %></td>
+      <td><%= deposit.bank_name %></td>
+      <td><%= deposit.branch_name %></td>
+      <td><%= deposit.account_type %></td>
+      <td><%= deposit.account_number %></td>
+      <td><%= deposit.balance %></td>
+      <td><%= deposit.manager %></td>
+      <td><%= deposit.has_document ? "☑" : "□" %></td>
+      <td><%= deposit.last_checked_on %></td>
+      <td>
+        <%= link_to "編集", edit_client_deposit_path(@client, deposit), class: "btn" %>
+        <%= link_to "削除", client_deposit_path(@client, deposit),
+            data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
+            class: "btn" %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<hr>
+
+<h2>有価証券等</h2>
+<%= link_to "追加", new_client_security_path(@client), class: "btn" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>種類</th>
+      <th>銘柄名</th>
+      <th>数量</th>
+      <th>額面金額</th>
+      <th>評価額</th>
+      <th>管理者</th>
+      <th>資料の有無</th>
+      <th>最終確認日</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @client.securities.each do |security| %>
+      <tr>
+        <td><%= security.security_kind %></td>
+        <td><%= security.security_name %></td>
+        <td><%= "#{security.quantity} #{security.unit}" %></td>
+        <td><%= security.face_value %></td>
+        <td><%= security.amount %></td>
+        <td><%= security.manager %></td>
+        <td><%= security.has_document ? "☑" : "□" %></td>
+        <td><%= security.security_last_checked_on %></td>
+        <td>
+          <%= link_to "編集", edit_client_security_path(@client, security), class:"btn" %> 
+          <%= link_to "削除", client_security_path(@client, security),
+                method: :delete,
+                data: { confirm: "本当に削除しますか？" },
+                class:"btn" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<hr>
+
+<h2>生命保険・損害保険等</h2>
+<%= link_to "追加", new_client_insurance_path(@client), class: "btn" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>保険会社</th>
+      <th>保険の種類</th>
+      <th>証書番号</th>
+      <th>保険金額（円）</th>
+      <th>契約者</th>
+      <th>受取人</th>
+      <th>資料の有無</th>
+      <th>最終確認日</th>
+      <th>操作</th>
+    <tr>
+  </thead>
+
+  <tbody>
+    <% @client.insurances.each do |insurance| %>
+      <tr>
+        <td><%= insurance.insurance_company %></td>
+        <td><%= insurance.insurance_kind %></td>
+        <td><%= insurance.policy_number %></td>
+        <td><%= insurance.amount %>円</td>
+        <td><%= insurance.contractor %></td>
+        <td><%= insurance.beneficiary %></td>
+        <td><%= insurance.has_document ? "☑" : "□" %></td>
+        <td><%= insurance.last_checked_on %></td>
+        <td>
+          <%= link_to "編集", edit_client_insurance_path(@client, insurance), class: "btn" %>
+          <%= link_to "削除", client_path(@client),
+              data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
+              class: "btn" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<hr>
+
+<h2>不動産（土地）</h2>
+<%= link_to "追加", new_client_real_estate_path(@client), class: "btn" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>所在</th>
+      <th>地番</th>
+      <th>地目</th>
+      <th>地積（㎡）</th>
+      <th>備考（現状、持分等）</th>
+      <th>資料の有無</th>
+      <th>最終確認日</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+<% @client.real_estates.select {|estate| estate.estate_type == "土地"} .each do |real_estate| %>      <tr>
+        <td><%= real_estate.address %></td>
+        <td><%= real_estate.lot_number %></td>
+        <td><%= real_estate.land_category %></td>
+        <td><%= real_estate.area %></td>
+        <td><%= real_estate.note %></td>
+        <td><%= real_estate.has_document ? "☑" : "□" %></td>
+        <td><%= real_estate.last_checked_on %></td>
+        <td>
+          <%= link_to "編集", edit_client_real_estate_path(@client, real_estate), class: "btn" %>
+          <%= link_to "削除", client_real_estate_path(@client, real_estate),
+                data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
+                class: "btn" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>不動産（建物）</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>所在</th>
+      <th>家屋番号</th>
+      <th>種類</th>
+      <th>床面積（㎡）</th>
+      <th>備考（現状、持分等）</th>
+      <th>資料の有無</th>
+      <th>最終確認日</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @client.real_estates.select{|estate| estate.estate_type == "建物" }.each do |real_estate| %>      <tr>
+        <td><%= real_estate.address %></td>
+        <td><%= real_estate.lot_number %></td>
+        <td><%= real_estate.land_category %></td>
+        <td><%= real_estate.area %></td>
+        <td><%= real_estate.note %></td>
+        <td><%= real_estate.has_document ? "☑" : "□" %></td>
+        <td><%= real_estate.last_checked_on %></td>
+        <td>
+          <%= link_to "編集", edit_client_real_estate_path(@client, real_estate), class: "btn" %>
+             <%= link_to "削除", client_real_estate_path(@client, real_estate),
+                  data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
+                  class: "btn" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<hr>
+
+<h2>債権</h2>
+<%= link_to "追加", new_client_claim_path(@client), class: "btn" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>債務者名</th>
+      <th>債権の内容</th>
+      <th>残額（円）</th>
+      <th>備考</th>
+      <th>資料の有無</th>
+      <th>最終確認日</th>
+      <th>操作</th>
+    <tr>
+  </thead>
+
+  <tbody>
+    <% @client.claims.each do |claim| %>
+      <tr>
+        <td><%= claim.debtor_name %></td>
+        <td><%= claim.content %></td>
+        <td><%= claim.amount %>円</td>
+        <td><%= claim.note %></td>
+        <td><%= claim.has_document ? "☑" : "□" %></td>
+        <td><%= claim.last_checked_on %></td>
+        <td>
+          <%= link_to "編集", edit_client_claim_path(@client, claim), class: "btn" %>
+          <%= link_to "削除", client_claim_path(@client, claim),
+              data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
+              class: "btn" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<hr>
+
+<h2>その他（自動車など）</h2>
+<%= link_to "追加", new_client_other_property_path(@client), class: "btn" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>種類</th>
+      <th>内容</th>
+      <th>評価額（円）</th>
+      <th>備考</th>
+      <th>資料の有無</th>
+      <th>最終確認日</th>
+      <th>操作</th>
+    <tr>
+  </thead>
+
+  <tbody>
+    <% @client.other_properties.each do |other_property| %>
+      <tr>
+        <td><%= other_property.kind %></td>
+        <td><%= other_property.content %></td>
+        <td><%= other_property.value %>円</td>
+        <td><%= other_property.note %></td>
+        <td><%= other_property.has_document ? "☑" : "□" %></td>
+        <td><%= other_property.last_checked_on %></td>
+        <td>
+          <%= link_to "編集", edit_client_other_property_path(@client, other_property), class:"btn" %> 
+          <%= link_to "削除", client_other_property_path(@client, other_property), 
+          data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, 
+          class: "btn" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<hr>
+
+<h2>負債</h2>
+<%= link_to "追加", new_client_debt_path(@client), class: "btn" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>債務者名（支払先）</th>
+      <th>負債の内容</th>
+      <th>残額（円）</th>
+      <th>返済月額（円）</th>
+      <th>資料の有無</th>
+      <th>最終確認日</th>
+      <th>操作</th>
+    <tr>
+  </thead>
+
+  <tbody>
+    <% @client.debts.each do |debt| %>
+      <tr>
+        <td><%= debt.creditor_name %></td>
+        <td><%= debt.content %></td>
+        <td><%= debt.amount %>円</td>
+        <td><%= debt.monthly_payment %>円</td>
+        <td><%= debt.has_document ? "☑" : "□" %></td>
+        <td><%= debt.last_checked_on %></td>
+        <td>
+          <%= link_to "編集", edit_client_debt_path(@client, debt), class: "btn" %>
+          <%= link_to "削除", client_debt_path(@client, debt),
+              data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
+              class: "btn" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<hr>
+
+<h2>遺産分割未了の相続財産</h2>
+<%= link_to "追加", new_client_inheritance_property_path(@client), class: "btn" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>状態（ある・ない・不明）</th>
+
+      <th>最終確認日</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @client.inheritance_properties.each do |inheritance_property| %>
+      <tr>
+        <td><%= inheritance_property.status %></td>
+        <td><%= inheritance_property.last_checked_on %></td>
+        <td>
+          <%= link_to "編集", edit_client_inheritance_property_path(@client, inheritance_property), class: "btn" %>
+          <%= link_to "削除", client_inheritance_property_path(@client, inheritance_property),
+              data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
+              class: "btn" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<hr>
+
+<%= link_to "財産目録（Excel）を出力する", "/exports/zaisan/#{@client.id}", class: "btn btn-primary" %>
+<%= link_to "被後見人一覧に戻る", clients_path, class: "btn btn-glay" %>

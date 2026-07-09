@@ -1,0 +1,33 @@
+<h1>遺産分割未了の相続財産（本人が相続人となっている遺産）</h1>
+
+<%= link_to "新規登録", new_client_inheritance_property_path(@client), class: "btn" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>遺産分割未了の相続財産（本人が相続人となっている遺産）の有無</th>
+      <th>最終確認日</th>
+      <th>操作</th>
+    <tr>
+  </thead>
+
+  <tbody>
+    <% @inheritance_properties.each do |inheritance_property| %>
+      <tr>
+        <td><%= inheritance_property.status %></td>
+        <td><%= inheritance_property.last_checked_on %></td>
+        <td>
+          <%= link_to "編集", edit_client_inheritance_property_path(@client, inheritance_property), class:"btn" %> 
+          <%= link_to "削除", client_inheritance_property_path(@client, inheritance_property), 
+          data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, 
+          class: "btn" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "戻る", client_path(@client), class: "btn btn-glay"%>
+
+
+   

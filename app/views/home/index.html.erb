@@ -1,5 +1,6 @@
 <% if user_signed_in? %>
   <h1>被後見人管理</h1>
+
   <div class="card">
     <%= link_to "被後見人一覧", clients_path, class: "btn" %>
     担当している被後見人の一覧です
@@ -9,6 +10,12 @@
     <%= link_to "被後見人の新規登録", new_client_path, class: "btn" %>
     新しく被後見人を登録します
   </div>
+
+  <div class="card">
+    <%= link_to "後見人情報", new_client_path, class: "btn" %>
+    ログインユーザー情報が後見人情報として扱われます
+  </div>
+  
   <%else%>
   <span>右のボタンからログイン画面に移動できます</span>
 <% end %>

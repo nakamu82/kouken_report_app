@@ -136,8 +136,11 @@ form input[type="submit"]:hover {
 }
 
 .hidden {
-  display: none;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
 }
+
 
 table{
  background-color: beige;

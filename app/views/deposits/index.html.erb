@@ -2,7 +2,7 @@
 
 <div class="card table-card">
 
-<%= link_to "＋預金情報を追加する", new_client_deposit_path, class: "btn" %>
+<%= link_to "追加", new_client_deposit_path, class: "btn" %>
 
 <table>
   <thead>
@@ -15,6 +15,7 @@
       <th>最終確認日</th>
       <th>残高（円）</th>
       <th>管理者</th>
+      <th>資料の有無</th>
       <th>操作</th>
     </tr>
   </thead>
@@ -29,9 +30,10 @@
       <td><%= deposit.last_checked_on %></td>
       <td><%= deposit.balance %></td>
       <td><%= deposit.manager %></td>
+      <td><%= deposit.has_document ? "☑" : "□" %></td>
       <td>
-      <%= link_to "編集", edit_client_deposit_path(deposit.client, deposit), class: "btn btn-blue" %>
-      <%= link_to "削除", client_deposit_path(deposit.client, deposit), class: "btn btn-mini", method: :delete, data: { turbo: false, confirm: "本当に削除しますか？" } %>          
+      <%= link_to "編集", edit_client_deposit_path(deposit.client, deposit), class: "btn" %>
+      <%= link_to "削除", client_deposit_path(deposit.client, deposit), class: "btn", method: :delete, data: { turbo: false, confirm: "本当に削除しますか？" } %>          
       </td>
     </tr>
   <% end %>
@@ -39,7 +41,7 @@
 </table>
 
 
-<%= link_to "戻る", request.referer || clietns_path, class: "btn btn-glay"%>
-<%= link_to "被後見人一覧へ", clients_path(@client), class: "btn btn-glay"%>
+<%= link_to "戻る", request.referer || clients_path, class: "btn btn-glay"%>
+<%= link_to "被後見人一覧", clients_path, class: "btn btn-glay"%>
 
 </div>

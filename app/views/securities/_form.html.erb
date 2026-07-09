@@ -1,0 +1,55 @@
+<%= form_with(model:[@client, @security]) do |form|  %>
+
+<div id="security_name_field">
+  <%= form.label :security_kind, "有価証券の種類を選択してください" %>
+  <%= form.select :security_kind,
+        ["株式", "投資信託","国債", "社債", "外貨預金", "手形", "小切手", "その他", "当該財産はない", "不明"],
+        {},
+        { id: "security_name_field"} %>
+</div>
+
+<div>
+  <%= form.label :security_name, "株式の銘柄、証券会社の名称等" %>
+  <%= form.text_field :security_name %>
+</div>
+
+<div>
+  <%= form.label :quantity, "数量" %>
+  <%= form.number_field :quantity %>
+</div>
+<div>
+  <%= form.label :unit, "単位" %>
+  <%= form.select :unit, ["株", "口", "枚", "本"] %>
+</div>
+
+<div>
+  <%= form.label :face_value, "額面金額（円）" %>
+  <%= form.number_field :face_value %>
+</div>
+
+<div>
+  <%= form.label :amount, "評価額（円）" %>
+  <%= form.number_field :amount %>
+</div>
+
+<div>
+  <%= form.label :manager, "管理者" %>
+  <%= form.text_field :manager %>
+</div>
+
+<div>
+  <%= form.label :has_document, "資料の有無" %>
+  <%= form.check_box :has_document %>
+</div>
+
+<div>
+  <%= form.label :security_last_checked_on, "最終確認日" %>
+    <%= form.date_field :security_last_checked_on %>
+</div>
+
+<div>
+  <%= form.submit "登録する" %>
+  <%= link_to "戻る", client_path(@client), class: "btn btn-glay" %> 
+</div>
+
+<% end %>

@@ -1,0 +1,39 @@
+<h1>保険一覧</h1>
+
+<%= link_to "新規登録", new_client_insurance_path(@client), class: "btn" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>保険会社</th>
+      <th>保険の種類</th>
+      <th>証書番号</th>
+      <th>保険金額（受取額）（円）</th>
+      <th>契約者</th>
+      <th>受取人</th>
+      <th>最終確認日</th>
+      <th>資料の有無</th>
+    <tr>
+  </thead>
+
+  <tbody>
+    <% @insurances.each do |insurance| %>
+      <tr>
+        <td><%= insurance.insurance_company %></td>
+        <td><%= insurance.insurance_kind %></td>
+        <td><%= insurance.policy_number %></td>
+        <td><%= insurance.amount %>円</td>
+        <td><%= insurance.contractor %></td>
+        <td><%= insurance.beneficiary %></td>
+        <td><%= insurance.last_checked_on %></td>
+        <td><%= insurance.has_document ? "☑" : "□" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "戻る", client_path(@client), class: "btn btn-glay"%>
+
+
+
+   

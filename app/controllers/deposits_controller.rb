@@ -43,7 +43,7 @@ def destroy
 end
 
 def deposit_params
-  params.require(:deposit).permit(:deposit_type, :bank_name, :branch_name, :account_type, :account_number, :last_checked_on, :balance, :manager, :facility_name)
+  params.require(:deposit).permit(:deposit_type, :bank_name, :branch_name, :account_type, :account_number, :last_checked_on, :balance, :manager, :facility_name, :has_document)
 end
 
 end

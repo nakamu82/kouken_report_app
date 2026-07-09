@@ -1,0 +1,50 @@
+<%= form_with(model: [@client, @insurance]) do |form| %>
+
+  <div>
+    <%= form.label :insurance_company, "保険会社の名称" %>
+    <%= form.text_field :insurance_company %>
+  </div>
+
+  <div>
+    <%= form.label :insurance_kind, "保険の種類" %>
+    <%= form.select :insurance_kind, ["生命保険", "損害保険", "医療保険", "火災保険", "その他"] %>
+  </div>
+
+  <div>
+    <%= form.label :policy_number, "証書番号" %>
+    <%= form.text_field :policy_number %>
+  </div>
+
+  <div>
+    <%= form.label :amount, "保険金額（円）" %>
+    <%= form.number_field :amount %>
+  </div>
+
+  <div>
+    <%= form.label :contractor, "契約者" %>
+    <%= form.text_field :contractor %>
+  </div>
+
+  <div>
+    <%= form.label :beneficiary, "受取人" %>
+    <%= form.text_field :beneficiary %>
+  </div>
+
+  <div>
+    <%= form.label :has_document, "資料の有無" %>
+    <%= form.check_box :has_document %>
+  </div>
+  
+  <div>
+    <%= form.label :last_checked_on, "最終確認日" %>
+    <%= form.date_field :last_checked_on %>
+  </div>
+
+
+  
+  <div>
+    <%= form.submit "登録する" %>
+    <%= link_to "戻る", client_path(@client), class: "btn btn-glay" %> 
+  </div>
+
+<% end %>

@@ -1,0 +1,41 @@
+<h1>負債一覧</h1>
+
+<%= link_to "新規登録", new_client_debt_path(@client), class: "btn" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>債務者名（支払先）</th>
+      <th>負債の内容</th>
+      <th>残額（円）</th>
+      <th>返済月額（円）</th>
+      <th>資料の有無</th>
+      <th>最終確認日</th>
+      <th>操作</th>
+    <tr>
+  </thead>
+
+  <tbody>
+    <% @debts.each do |debt| %>
+      <tr>
+        <td><%= debt.creditor_name %></td>
+        <td><%= debt.content %></td>
+        <td><%= debt.amount %>円</td>
+        <td><%= debt.monthly_payment %>円</td>
+        <td><%= debt.has_document ? "☑" : "□" %></td>
+        <td><%= debt.last_checked_on %></td>
+        <td>
+          <%= link_to "編集", edit_client_debt_path(@client, debt), class:"btn" %> 
+          <%= link_to "削除", client_debt_path(@client, debt), 
+          data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, 
+          class: "btn" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "戻る", client_path(@client), class: "btn btn-glay"%>
+
+
+   

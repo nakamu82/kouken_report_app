@@ -1,0 +1,42 @@
+<h1>その他（自動車など）財産一覧</h1>
+
+<%= link_to "追加", new_client_other_property_path(@client), class: "btn" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>種類</th>
+      <th>内容</th>
+      <th>評価額（円）</th>
+      <th>備考（円）</th>
+      <th>資料の有無</th>
+      <th>最終確認日</th>
+      <th>操作</th>
+    <tr>
+  </thead>
+
+  <tbody>
+    <% @other_property.each do |other_property| %>
+      <tr>
+        <td><%= other_property.kind %></td>
+        <td><%= other_property.content %></td>
+        <td><%= other_property.value %>円</td>
+        <td><%= other_property.note %></td>
+        <td><%= other_property.has_document ? "☑" : "□" %></td>
+        <td><%= other_property.last_checked_on %></td>
+        <td>
+          <%= link_to "編集", edit_client_other_property_path(@client, other_property), class:"btn" %> 
+          <%= link_to "削除", client_other_properties_path(@client, other_property), 
+          data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, 
+          class: "btn" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "戻る", client_path(@client), class: "btn btn-glay"%>
+
+
+
+   

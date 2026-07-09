@@ -1,0 +1,38 @@
+<%= form_with(model: [@client, @other_property]) do |form| %>
+
+  <div>
+    <%= form.label :kind, "種類" %>
+    <%= form.text_field :kind %>
+  </div>
+
+  <div>
+    <%= form.label :content, "内容" %>
+    <%= form.text_field :content %>
+  </div>
+
+  <div>
+    <%= form.label :value, "評価額（円）" %>
+    <%= form.number_field :value %>
+  </div>
+
+  <div>
+    <%= form.label :note, "備考" %>
+    <%= form.text_field :note %>
+  </div>
+
+  <div>
+    <%= form.label :has_document, "資料の有無" %>
+    <%= form.check_box :has_document %>
+  </div>
+  
+  <div>
+    <%= form.label :last_checked_on, "最終確認日" %>
+    <%= form.date_field :last_checked_on %>
+  </div>
+
+  <div>
+    <%= form.submit "登録する" %>
+    <%= link_to "戻る", client_path(@client), class: "btn btn-glay" %> 
+    </div>
+
+<% end %>

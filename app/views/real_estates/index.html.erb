@@ -1,0 +1,78 @@
+<h1><%= @client.name %> さんの不動産一覧</h1>
+<%= link_to "追加", new_client_real_estate_path(@client) , class: "btn" %>
+
+<h2>土地</h2>
+<table>
+  <thead>
+    <tr>
+      <th>所在</th>
+      <th>地番</th>
+      <th>地目</th>
+      <th>地積（㎡）</th>
+      <th>備考（現状、持分等）</th>
+      <th>資料</th>
+      <th>最終確認日</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @real_estates.select {|estate| estate.estate_type == "土地"} .each do |real_estate| %>
+      <tr>
+        <td><%= real_estate.address %></td>
+        <td><%= real_estate.lot_number %></td>
+        <td><%= real_estate.land_category %></td>
+        <td><%= real_estate.area %></td>
+        <td><%= real_estate.note%></td>
+        <td><%= real_estate.has_document ? "☑" : "□" %></td>
+        <td><%= real_estate.last_checked_on %></td>
+        <td>
+          <%= link_to "編集", edit_client_real_estate_path(@client, real_estate), class:"btn" %> 
+          <%= link_to "削除", client_real_estate_path(@client, real_estate), 
+          data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, 
+          class: "btn" %>
+
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>建物</h2>
+<table>
+  <thead>
+    <tr>
+      <th>所在</th>
+      <th>家屋番号</th>
+      <th>種類</th>
+      <th>床面積（㎡）</th>
+      <th>備考（現状、持分等）</th>
+      <th>資料</th>
+      <th>最終確認日</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @real_estates.select{|estate| estate.estate_type == "建物" }.each do |real_estate| %>
+      <tr>
+        <td><%= real_estate.address %></td>
+        <td><%= real_estate.building_number %></td>
+        <td><%= real_estate.building_kind %></td>
+        <td><%= real_estate.floor_area %></td>
+        <td><%= real_estate.note %></td>
+        <td><%= real_estate.has_document ?  "☑" : "□" %></td>
+        <td><%= real_estate.last_checked_on %></td>
+
+        <td>
+          <%= link_to "編集", edit_client_real_estate_path(@client, real_estate), class:"btn" %> 
+          <%= link_to "削除", client_real_estate_path(@client, real_estate),
+                data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" },
+                class:"btn"%>
+        </td>
+      </tr>     
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "戻る", client_path(@client), class: "btn btn-glay"%>

@@ -1,0 +1,42 @@
+<h1><%= @client.name %> さんの債権（貸付金、損害賠償金など）一覧</h1>
+
+<%= link_to "新規登録", new_client_claim_path(@client), class: "btn" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>債務者名（請求先）</th>
+      <th>債権の内容</th>
+      <th>残額（円）</th>
+      <th>備考</th>
+      <th>資料の有無</th>
+      <th>最終確認日</th>
+      <th>操作</th>
+    <tr>
+  </thead>
+
+  <tbody>
+    <% @client.claims.each do |claim| %>
+      <tr>
+        <td><%= claim.debtor_name %></td>
+        <td><%= claim.content %></td>
+        <td><%= claim.amount %>円</td>
+        <td><%= claim.note %></td>
+        <td><%= claim.has_document ? "☑" : "□" %></td>
+        <td><%= claim.last_checked_on %></td>
+        <td>
+          <%= link_to "編集", edit_client_claim_path(@client, claim), class:"btn" %> 
+          <%= link_to "削除", client_claim_path(@client, claim), 
+          data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, 
+          class: "btn" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "戻る", client_path(@client), class: "btn btn-glay"%>
+
+
+
+   

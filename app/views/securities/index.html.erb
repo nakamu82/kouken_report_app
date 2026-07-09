@@ -1,0 +1,43 @@
+<h1><%= @client.name %> さんの有価証券一覧</h1>
+
+<%= link_to "追加", new_client_security_path(@client), class: "btn" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>種類</th>
+      <th>銘柄名</th>
+      <th>数量</th>
+      <th>額面金額</th>
+      <th>評価額</th>
+      <th>管理者</th>
+      <th>最終確認日</th>
+      <th>資料</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @securities.each do |security| %>
+      <tr>
+        <td><%= security.security_kind %></td>
+        <td><%= security.security_name %></td>
+        <td><%= "#{security.quantity} #{security.unit}" %></td>
+        <td><%= security.face_value %></td>
+        <td><%= security.amount %></td>
+        <td><%= security.manager %></td>
+        <td><%= security.security_last_checked_on %></td>
+        <td><%= security.has_document ? "☑" : "□" %></td>
+
+        <td>
+          <%= link_to "編集", edit_client_security_path(@client, security) ,class:"btn" %> 
+          <%= link_to "削除", client_security_path(@client, security),
+                method: :delete,
+                data: { confirm: "本当に削除しますか？" } ,class:"btn"%>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "戻る", client_path(@client), class: "btn btn-glay"%>

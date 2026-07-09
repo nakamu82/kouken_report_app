@@ -15,7 +15,6 @@
     %>
   </div>
 
-  <!-- 銀行系の入力欄 -->
   <div class="bank-fields" data-deposit-form-target = "bankFields">
 
     <div>
@@ -57,11 +56,38 @@
 
   </div>
 
-  <!-- 施設等預入金の入力欄 -->
   <div class="facility-fields" data-deposit-form-target="facilityFields">
     <div>
       <%= form.label :facility_name, "施設等預入金の預入先" %><br>
       <%= form.text_field :facility_name %>
+    </div>
+  </div>
+
+  <div class="support-fields" data-deposit-form-target="supportFields">
+
+    <div>
+      <%= form.label :bank_name, "金融機関の名称" %><br>
+      <%= form.text_field :bank_name %>
+    </div>
+
+    <div>
+      <%= form.label :branch_name, "支店名" %><br>
+      <%= form.text_field :branch_name %>
+    </div>
+
+    <div>
+      <%= form.label :account_number, "口座番号" %><br>
+      <%= form.text_field :account_number %>
+    </div>
+
+    <div>
+      <%= form.label :last_checked_on, "最終確認日" %><br>
+      <%= form.date_field :last_checked_on,
+        start_year: 2000,
+        end_year: Date.today.year,
+        order: [:year, :month, :day],
+        default: Date.today
+      %>
     </div>
   </div>
 
@@ -76,7 +102,14 @@
   </div>
 
   <div>
-    <%= form.submit "確認" %>
+    <%= form.label :has_document, "資料の有無" %><br>
+    <%= form.check_box :has_document %>
+  </div>
+
+  <div>
+    <%= form.submit "登録する" %>
+    <%= link_to "戻る", client_path(@client), class: "btn btn-glay" %> 
   </div>
 
 <% end %>
+

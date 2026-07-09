@@ -1,0 +1,37 @@
+<%= form_with(model: [@client, @claim]) do |form| %>
+
+  <div>
+    <%= form.label :debtor_name, "債務者名（請求先）" %>
+    <%= form.text_field :debtor_name %>
+  </div>
+
+  <div>
+    <%= form.label :content, "債権の内容" %>
+    <%= form.text_field :content %>
+  </div>
+
+  <div>
+    <%= form.label :amount, "残額（円）" %>
+    <%= form.number_field :amount %>
+  </div>
+
+  <div>
+    <%= form.label :note, "備考" %>
+    <%= form.text_field :note %>
+  </div>
+
+  <div>
+    <%= form.label :has_document, "資料の有無" %>
+    <%= form.check_box :has_document %>
+  </div>
+  
+  <div>
+    <%= form.label :last_checked_on, "最終確認日" %>
+    <%= form.date_field :last_checked_on %>
+  </div>
+
+  <div>
+    <%= form.submit "登録する" %>
+  </div>
+
+<% end %>

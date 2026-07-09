@@ -1,20 +1,19 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["bankFields", "facilityFields"]
+  static targets = ["bankFields", "facilityFields", "supportFields"]
 
   switchFields(event) {
     const selectedValue = event.target.value
 
-    // まず両方非表示
-    this.bankFieldsTarget.classList.add("hidden")
-    this.facilityFieldsTarget.classList.add("hidden")
+    this.disableAll()
 
-    // 選択に応じて表示
     if (selectedValue === "金融機関") {
-      this.bankFieldsTarget.classList.remove("hidden")
+      this.enable(this.bankFieldsTarget)
     } else if (selectedValue === "施設等預入金") {
-      this.facilityFieldsTarget.classList.remove("hidden")
+      this.enable(this.facilityFieldsTarget)
+    } else if (selectedValue === "支援信託" || selectedValue === "支援預貯金") {
+      this.enable(this.supportFieldsTarget)
     }
   }
 
@@ -22,15 +21,26 @@ export default class extends Controller {
     const select = this.element.querySelector("select")
     const selectedValue = select.value
 
-    // まず両方非表示
-    this.bankFieldsTarget.classList.add("hidden")
-    this.facilityFieldsTarget.classList.add("hidden")
+    this.disableAll()
 
-    // 選択に応じて表示
     if (selectedValue === "金融機関") {
-      this.bankFieldsTarget.classList.remove("hidden")
+      this.enable(this.bankFieldsTarget)
     } else if (selectedValue === "施設等預入金") {
-      this.facilityFieldsTarget.classList.remove("hidden")
+      this.enable(this.facilityFieldsTarget)
+    } else if (selectedValue === "支援信託" || selectedValue === "支援預貯金") {
+      this.enable(this.supportFieldsTarget)
     }
+  }
+
+  disableAll() {
+    [this.bankFieldsTarget, this.facilityFieldsTarget, this.supportFieldsTarget].forEach(target => {
+      target.classList.add("hidden")
+      target.querySelectorAll("input, select").forEach(el => el.disabled = true)
+    })
+  }
+
+  enable(target) {
+    target.classList.remove("hidden")
+    target.querySelectorAll("input, select").forEach(el => el.disabled = false)
   }
 }

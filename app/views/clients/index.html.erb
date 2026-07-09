@@ -1,11 +1,10 @@
 <h1>被後見人一覧</h1>
 
-<%= link_to "＋新規登録", new_client_path, class: "btn"%>
+<%= link_to "新規登録", new_client_path, class: "btn"%>
 
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th>No</th>
       <th>氏名</th>
       <th>生年月日</th>
       <th>住所</th>
@@ -16,15 +15,16 @@
   <tbody>
     <% @clients.each do |client| %>
       <tr>
-        <td><%= client.id %></td>
-        <td><%= client.name %></td>
+        <td>
+          <%= client.name %>  
+          <%= link_to "詳細情報", client_path(client), class: "btn btn-glay" %>
+        </td>
         <td><%= client.birthdate %></td>
         <td><%= client.address %></td>
         <td><%= client.case_number %></td>
         <td>
-          <%= link_to "詳細", client_path(client), class: "btn btn-mini" %>
-          <%= link_to "編集", edit_client_path(client), class: "btn btn-mini"%>
-          <%= link_to "削除", client_path(client), class: "btn btn-mini", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>  
+          <%= link_to "編集", edit_client_path(client), class: "btn"%>
+          <%= button_to "削除", client_path(client), method: :delete, form: { data: { turbo_confirm: "本当に削除しますか？" } }, class: "btn" %>        
         </td>
       </tr>
     <% end %>

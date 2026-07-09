@@ -34,7 +34,6 @@ class ClientsController < ApplicationController
 
   def edit
     @client = current_user.clients.find(params[:id])
-
   end
 
   def destroy

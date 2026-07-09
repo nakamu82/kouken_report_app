@@ -1,0 +1,18 @@
+<%= form_with(model: [@client, @inheritance_property]) do |form| %>
+
+  <div>
+    <%= form.label :status, "遺産分割未了の相続財産（本人が相続人となっている遺産）" %>
+    <%= form.select :status, ["ある", "ない", "不明"] %>
+  </div>
+
+  <div>
+    <%= form.label :last_checked_on, "最終確認日" %>
+    <%= form.date_field :last_checked_on %>
+  </div>
+
+  <div>
+    <%= form.submit "登録する" %>
+    <%= link_to "戻る", client_path(@client), class: "btn btn-glay" %> 
+    </div>
+
+<% end %>

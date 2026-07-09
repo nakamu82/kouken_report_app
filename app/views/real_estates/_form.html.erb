@@ -1,0 +1,49 @@
+<%= form_with model: [@client, @real_estate] do |form| %>
+
+  <div data-controller = "real-estate-form">
+    <%= form.label :estate_type, "不動産の種類（土地・建物）" %>
+    <%= form.select :estate_type, [["土地", "土地"], ["建物", "建物"]], {}, {data: {action: "change->real-estate-form#toggle", "real-estate-form-target": "select"}} %>
+  
+    <%= form.label :address, "所在" %>
+    <%= form.text_field :address %>
+  
+
+
+  <div data-real-estate-form-target = "land">
+    <%= form.label :lot_number, "地番" %>
+    <%= form.text_field :lot_number %>
+
+    <%= form.label :land_category, "地目" %>
+    <%= form.text_field :land_category %>
+
+    <%= form.label :area, "地積（㎡）" %>
+    <%= form.number_field :area %>
+  </div>
+  
+  <div data-real-estate-form-target = "building">
+    <%= form.label :building_number, "家屋番号" %>
+    <%= form.text_field :building_number %>
+  
+    <%= form.label :building_kind, "種類" %>
+    <%= form.text_field :building_kind %>
+  
+    <%= form.label :floor_area, "床面積（㎡）" %>
+    <%= form.number_field :floor_area %>
+  </div>
+
+  
+    <%= form.label :note, "備考（現状、持分等）" %>
+    <%= form.text_field :note %>
+  
+    <%= form.label :has_document, "資料の有無" %>
+    <%= form.check_box :has_document %>
+  
+    <%= form.label :last_checked_on, "最終確認日" %>
+    <%= form.date_field :last_checked_on %>
+  
+  <div>
+   <%= form.submit "登録する" %>
+   <%= link_to "戻る", client_path(@client), class: "btn btn-glay" %> 
+  </div>
+</div>
+<% end %>
