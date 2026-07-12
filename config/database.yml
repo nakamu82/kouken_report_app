@@ -1,4 +1,7 @@
-# SQLite. Versions 3.8.0 and up are supported.
+production:
+  <<: *default
+  adapter: sqlite3
+  database: storage/production.sqlite3# SQLite. Versions 3.8.0 and up are supported.
 #   gem install sqlite3
 #
 #   Ensure the SQLite 3 gem is defined in your Gemfile
@@ -29,4 +32,5 @@ test:
 # ensure the database is located in a persisted volume.
 production:
   <<: *default
-  # database: path/to/persistent/storage/production.sqlite3
+  adapter: sqlite3
+  database: storage/production.sqlite3
