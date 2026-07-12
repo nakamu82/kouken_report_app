@@ -62,5 +62,6 @@ gem "rails-ujs"
 
 gem "rubyXL"
 
-gem"net-pop", require: false
+gem "net-pop"
 
+gem "net-protocol"
