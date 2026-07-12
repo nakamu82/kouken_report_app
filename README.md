@@ -97,10 +97,10 @@ https://kouken-report-app.onrender.com/
 
 ---
 
-## 財産情報登録画面
+## 財産情報画面
 
 <p align="center">
-  <img src="docs/assets.png" alt="財産情報登録画面" width="700">
+  <img src="docs/assets.png" alt="財産情報画面" width="700">
 </p>
 
 ---
