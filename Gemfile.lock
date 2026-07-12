@@ -357,6 +357,7 @@ DEPENDENCIES
   devise (~> 5.0)
   importmap-rails
   jbuilder
+  net-pop
   puma (>= 5.0)
   rails (~> 7.2.3)
   rails-ujs

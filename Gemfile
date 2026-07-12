@@ -61,3 +61,6 @@ gem "devise", "~> 5.0"
 gem "rails-ujs"
 
 gem "rubyXL"
+
+gem"net-pop", require: false
+
