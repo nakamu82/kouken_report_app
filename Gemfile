@@ -65,3 +65,5 @@ gem "rubyXL"
 gem "net-pop"
 
 gem "net-protocol"
+
+gem "pg"
