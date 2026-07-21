@@ -46,12 +46,7 @@
 
     <div>
       <%= form.label :last_checked_on, "最終確認日" %><br>
-      <%= form.date_field :last_checked_on,
-        start_year: 2000,
-        end_year: Date.today.year,
-        order: [:year, :month, :day],
-        default: Date.today
-      %>
+      <%= form.date_field :last_checked_on %>
     </div>
 
   </div>
