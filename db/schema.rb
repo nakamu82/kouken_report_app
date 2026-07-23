@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_30_062538) do
+ActiveRecord::Schema[7.2].define(version: 2026_07_23_011303) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "claims", force: :cascade do |t|
     t.string "debtor_name"
     t.string "content"
@@ -18,7 +21,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_30_062538) do
     t.text "note"
     t.boolean "has_document"
     t.date "last_checked_on"
-    t.integer "client_id", null: false
+    t.bigint "client_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_claims_on_client_id"
@@ -31,7 +34,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_30_062538) do
     t.string "case_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
 
@@ -41,7 +44,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_30_062538) do
     t.integer "amount"
     t.boolean "has_document"
     t.date "last_checked_on"
-    t.integer "client_id", null: false
+    t.bigint "client_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "monthly_payment"
@@ -56,7 +59,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_30_062538) do
     t.date "last_checked_on"
     t.integer "balance"
     t.string "manager"
-    t.integer "client_id", null: false
+    t.bigint "client_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "deposit_type"
@@ -68,7 +71,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_30_062538) do
   create_table "inheritance_properties", force: :cascade do |t|
     t.string "status"
     t.date "last_checked_on"
-    t.integer "client_id", null: false
+    t.bigint "client_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_inheritance_properties_on_client_id"
@@ -83,7 +86,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_30_062538) do
     t.string "beneficiary"
     t.boolean "has_document"
     t.date "last_checked_on"
-    t.integer "client_id", null: false
+    t.bigint "client_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_insurances_on_client_id"
@@ -96,7 +99,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_30_062538) do
     t.text "note"
     t.boolean "has_document"
     t.date "last_checked_on"
-    t.integer "client_id", null: false
+    t.bigint "client_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_other_properties_on_client_id"
@@ -114,7 +117,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_30_062538) do
     t.text "note"
     t.boolean "has_document"
     t.date "last_checked_on"
-    t.integer "client_id", null: false
+    t.bigint "client_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_real_estates_on_client_id"
@@ -123,12 +126,12 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_30_062538) do
   create_table "securities", force: :cascade do |t|
     t.string "security_kind"
     t.string "security_name"
-    t.string "amount"
+    t.integer "amount"
     t.string "manager"
-    t.integer "client_id", null: false
+    t.bigint "client_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "security_last_checked_on"
+    t.date "last_checked_on"
     t.decimal "quantity", precision: 15, scale: 2
     t.decimal "face_value", precision: 15, scale: 2
     t.boolean "has_document", default: false

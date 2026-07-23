@@ -43,7 +43,7 @@ def destroy
 end
 
 def security_params
-  params.require(:security).permit(:security_kind, :security_name, :amount, :manager, :security_last_checked_on, :quantity,  :face_value, :has_document, :unit)
+  params.require(:security).permit(:security_kind, :security_name, :amount, :manager, :last_checked_on, :quantity,  :face_value, :has_document, :unit)
 end
 
 end
