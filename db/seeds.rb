@@ -121,7 +121,7 @@ Security.create!(
   amount: 480000,
   manager: "証券会社",
   has_document: true,
-  security_last_checked_on: Date.new(2024,6,1)
+  last_checked_on: Date.new(2024,6,1)
 )
 
 # ================================
@@ -202,7 +202,7 @@ Security.create!(
   amount: 150000,
   manager: "証券会社",
   has_document: false,
-  security_last_checked_on: Date.new(2024,6,1)
+  last_checked_on: Date.new(2024,6,1)
 )
 
 # ================================
@@ -283,8 +283,9 @@ Security.create!(
   amount: 500000,
   manager: "銀行",
   has_document: true,
-  security_last_checked_on: Date.new(2024,6,1)
+  last_checked_on: Date.new(2024,6,1)
 )
+
 # ================================
 # クライアント4（鈴木一郎）
 # ================================
